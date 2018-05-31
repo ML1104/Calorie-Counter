@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calorie Counter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="container">
+            <div id="title">Vue.js Calorie Counter</div>
+            <div id="description">
+                <div>Description</div>
+                <div class="wrapper">
+                    <div>Calories</div>
+                    <div>Fat</div>
+                    <div>Carbs</div>
+                    <div>Protein</div>
+                </div>
+            </div>
+            <div id="items">
+                <counter-item v-show="counters.first" class="counters"><div class="desc">{{ description }}</div> <div class="cals"><div>{{ counter1 }} {{ counter2 }} {{ counter3 }} {{ counter4 }}</div></div></counter-item>
+                <counter-item v-show="counters.second" class="counters"><div class="desc">{{ description }}</div> <div class="cals"><div>{{ counter1 }} {{ counter2 }} {{ counter3 }} {{ counter4 }}</div></div></counter-item>
+                <counter-item v-show="counters.third" class="counters"><div class="desc">{{ description }}</div> <div class="cals"><div>{{ counter1 }} {{ counter2 }} {{ counter3 }} {{ counter4 }}</div></div></counter-item>
+                <counter-item v-show="counters.fourth" class="counters"><div class="desc">{{ description }}</div> <div class="cals"><div>{{ counter1 }} {{ counter2 }} {{ counter3 }} {{ counter4 }}</div></div></counter-item>
+                <counter-item v-show="counters.fifth" class="counters"><div class="desc">{{ description }}</div> <div class="cals"><div>{{ counter1 }} {{ counter2 }} {{ counter3 }} {{ counter4 }}</div></div></counter-item>
+            </div>
+            <div id="calculate">
+                <div>Totals:</div>
+                <div>{{ totals.calories }}</div>
+                <div>{{ totals.fats }}</div>
+                <div>{{ totals.carbs }}</div>
+                <div>{{ totals.protein }}</div>
+            </div>
+            <div id="input">
+                <input type="text" v-model="description" placeholder="Description">
+                <input type="number" v-model="counter1"  placeholder="Calories">
+                <input type="number" v-model="counter2" placeholder="Fat">
+                <input type="number" v-model="counter3" placeholder="Carbs">
+                <input type="number" v-model="counter4" placeholder="Protein">
+                <button v-on:click="addTemplate()">+</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        
+        Vue.component('counter-item', {
+            template: '<div class="counter"><slot></slot><div class="close">X</div></div>'
+        })
+        
+        var app = new Vue ({
+            el: "#app",
+            data: {
+                description: '',
+                counter1: parseInt(''),
+                counter2: parseInt(''),
+                counter3: parseInt(''),
+                counter4: parseInt(''),
+                
+                counters: {
+                    first: false,
+                    second: false,
+                    third: false,
+                    fourth: false,
+                    fifth: false
+                },
+                
+                totals: {
+                    calories: (this.counter1 * 5),
+                    fats: (this.counter2 * 5),
+                    carbs: (this.counter3 * 5),
+                    protein: (this.counter4 * 5)
+                    
+                }
+                
+            },
+            
+            methods: {
+                addTemplate() {
+                    if (this.counters.first === false) {
+                        this.counters.first = true;
+                    }
+                    
+                    if (this.counters.first === true) {
+                        this.counters.second = true;
+                    }
+                    
+                    if (this.counters.second === true) {
+                        this.counters.third = true;
+                    }
+                    
+                    if (this.counters.third === true) {
+                        this.counters.fourth = true;
+                    }
+                    
+                    if (this.counters.fourth === true) {
+                        this.counters.fifth = true;
+                    }
+                },
+                
+                removeTemplate() { 
+                    var close = document.querySelectorAll('.close');
+                    var i;
+                    for (i = 0; i < close.length; i++) {
+                        close[i].addEventListener('click', function() {
+                            this.counters.first = false;
+                            this.counters.second = false;
+                            this.counters.third = false;
+                            this.counters.fourth = false;
+                            this.counters.fifth = false;
+                        })
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+</html>
